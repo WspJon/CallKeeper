@@ -1,17 +1,17 @@
-# 24/7 Discord AFK Voice Bot
+# 24/7 Discord Voice Channel AFK Keeper
 
-A lightweight Python Discord bot using `discord.py` that stays in a Voice Channel 24/7 to keep the call timer active.
+A lightweight tool using `discord.py` that stays in a Voice Channel 24/7 to keep call timers running indefinitely.
 
 ## Features
-- **Automatic Reconnection Loop**: Checks voice connection state every 10 seconds and automatically reconnects if kicked or disconnected.
-- **Bandwidth Saver**: Deafens and mutes itself upon joining.
-- **Self-Healing**: Handles being moved to wrong channels or dropped connection gracefully.
+- **Automatic Reconnection Loop**: Checks voice connection state every 10 seconds and automatically reconnects if dropped or disconnected.
+- **Zero Bandwidth**: Deafens and mutes upon joining to conserve bandwidth.
+- **Self-Healing**: Handles network interruptions and voice server resets gracefully.
 
 ## Setup Instructions
 
 ### 1. Prerequisites
 - Python 3.8 or higher
-- A Discord Bot Token ([Discord Developer Portal](https://discord.com/developers/applications))
+- Token & Voice Channel ID
 
 ### 2. Installation
 Clone the repository and install dependencies:
@@ -20,8 +20,9 @@ Clone the repository and install dependencies:
 git clone <your-repo-url>
 cd discord_afk_bot
 python -m venv venv
+
 # On Windows:
-venv\Scripts\activate
+.\venv\Scripts\activate
 # On Linux/Mac:
 source venv/bin/activate
 
@@ -37,11 +38,11 @@ cp .env.example .env
 
 Edit `.env`:
 ```env
-DISCORD_TOKEN=your_bot_token_here
+DISCORD_TOKEN=your_token_here
 VOICE_CHANNEL_ID=your_voice_channel_id_here
 ```
 
-### 4. Running the Bot
+### 4. Running the Script
 ```bash
 python bot.py
 ```
