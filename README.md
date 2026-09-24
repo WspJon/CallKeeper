@@ -4,7 +4,23 @@
 [![discord.py](https://img.shields.io/badge/discord.py-v2.4.0-blueviolet.svg)](https://github.com/Rapptz/discord.py)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**CallKeeper** is a lightweight, self-healing Python bot designed to keep Discord voice call timers running indefinitely. It stays connected to a specified voice channel 24/7 and automatically reconnects if kicked, disconnected, or moved.
+**CallKeeper** is a lightweight, self-healing Python bot designed to stay connected in a Discord voice channel 24/7 to keep the call timer running indefinitely. It automatically reconnects if kicked, disconnected, or moved.
+
+---
+
+## 📋 Table of Contents
+- [✨ Features](#-features)
+- [📖 Step-by-Step Setup Guide](#-step-by-step-setup-guide)
+  - [Step 1: Get Discord Credentials](#step-1-get-discord-credentials)
+  - [Step 2: Invite Bot to Server](#step-2-invite-bot-to-server)
+  - [Step 3: Local Installation](#step-3-local-installation)
+  - [Step 4: Configure Credentials](#step-4-configure-credentials)
+  - [Step 5: Run the Bot](#step-5-run-the-bot)
+- [🌐 24/7 Hosting Guide (Run Without PC On)](#-247-hosting-guide-run-without-pc-on)
+  - [Option A: Free Hosting on Render.com](#option-a-free-hosting-on-rendercom-recommended)
+  - [Option B: VPS / Linux Server (Ubuntu/Debian)](#option-b-vps--linux-server-ubuntudebian)
+- [❓ FAQ](#-faq)
+- [📄 License](#-license)
 
 ---
 
@@ -13,73 +29,130 @@
 - 🔄 **Auto-Reconnect Loop**: Continuously checks voice connection status every 10 seconds and automatically reconnects if dropped.
 - 🔇 **Zero-Bandwidth Idling**: Automatically mutes and deafens itself upon joining to minimize bandwidth and CPU usage.
 - 🛠️ **Self-Healing**: Recovers gracefully from network interruptions, server restarts, or manual disconnects.
-- 🔒 **Secure Configuration**: Uses environment variables (`.env`) to ensure bot tokens and sensitive IDs are never exposed.
+- 🔒 **Secure Configuration**: Uses environment variables (`.env`) so your secret tokens remain safe.
 
 ---
 
-## 🚀 Quick Start
+## 📖 Step-by-Step Setup Guide
 
-### 1. Prerequisites
-- [Python 3.8+](https://www.python.org/downloads/) installed on your machine.
-- A **Discord Bot Token** and **Voice Channel ID**.
+### Step 1: Get Discord Credentials
+1. Go to the [Discord Developer Portal](https://discord.com/developers/applications).
+2. Click **New Application**, enter a name (e.g., `CallKeeper`), and click **Create**.
+3. In the left sidebar, click **Bot**.
+4. Click **Reset Token**, copy the generated token, and save it somewhere safe. *(This is your `DISCORD_TOKEN`)*.
+5. Get your **Voice Channel ID**:
+   - Open Discord -> **User Settings** -> **Advanced** -> Turn ON **Developer Mode**.
+   - Right-click the voice channel you want the bot to join and click **Copy Channel ID**. *(This is your `VOICE_CHANNEL_ID`)*.
 
-### 2. Installation
+---
 
-Clone the repository and set up a virtual environment:
+### Step 2: Invite Bot to Server
+1. In the Developer Portal, go to **OAuth2** -> **URL Generator**.
+2. Under **Scopes**, check `bot`.
+3. Under **Bot Permissions**, check:
+   - `Connect` (Voice Permissions)
+   - `Speak` (Voice Permissions)
+4. Copy the generated URL at the bottom, paste it into your browser, select your server, and click **Authorize**.
+
+---
+
+### Step 3: Local Installation
+Open your terminal or command prompt and clone the repository:
 
 ```bash
-# Clone this repository
+# 1. Clone the repository
 git clone https://github.com/WspJon/CallKeeper.git
 cd CallKeeper
 
-# Create and activate a virtual environment
+# 2. Create a virtual environment
 python -m venv venv
 
-# On Windows:
+# 3. Activate the virtual environment
+# Windows (PowerShell):
 .\venv\Scripts\activate
-
-# On macOS/Linux:
+# Windows (CMD):
+.\venv\Scripts\activate.bat
+# macOS / Linux:
 source venv/bin/activate
 
-# Install required dependencies
+# 4. Install dependencies
 pip install -r requirements.txt
 ```
 
 ---
 
-## ⚙️ Configuration
-
-1. Copy the sample environment file:
+### Step 4: Configure Credentials
+1. Duplicate `.env.example` and rename it to `.env`:
    ```bash
    cp .env.example .env
    ```
-
-2. Open `.env` in any text editor and fill in your credentials:
+2. Open `.env` in any text editor and paste your credentials:
    ```env
-   DISCORD_TOKEN=your_bot_token_here
+   DISCORD_TOKEN=your_actual_bot_token_here
    VOICE_CHANNEL_ID=your_voice_channel_id_here
    ```
 
-> [!TIP]
-> **How to get the Voice Channel ID:**
-> Enable **Developer Mode** in Discord Settings -> Advanced. Right-click your desired voice channel and select **Copy Channel ID**.
-
 ---
 
-## 🎮 Usage
-
-Start the bot with:
-
+### Step 5: Run the Bot
 ```bash
 python bot.py
 ```
+You will see output indicating the bot has successfully logged in and joined the voice channel!
 
-You should see console logs indicating successful login and connection:
+---
 
-```text
-Logged in as CallKeeper#1234 (ID: 987654321)
-Bot is not in the channel. Attempting to connect to General...
-Successfully connected to General
+## 🌐 24/7 Hosting Guide (Run Without PC On)
+
+If you want the bot to stay in the call 24/7 even when your PC is turned off, you can deploy it to a free cloud service or a Linux VPS.
+
+---
+
+### Option A: Free Hosting on Render.com (Recommended)
+
+1. Push your code to your GitHub repository ([WspJon/CallKeeper](https://github.com/WspJon/CallKeeper)).
+2. Sign up for a free account at [Render.com](https://render.com/).
+3. On your Render Dashboard, click **New +** -> **Background Worker**.
+4. Connect your GitHub account and select your **`CallKeeper`** repository.
+5. Fill in the deployment details:
+   - **Name**: `callkeeper-bot`
+   - **Environment**: `Python 3`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `python bot.py`
+6. Scroll down to **Environment Variables** and add two variables:
+   - Key: `DISCORD_TOKEN` | Value: *(Your bot token)*
+   - Key: `VOICE_CHANNEL_ID` | Value: *(Your voice channel ID)*
+7. Click **Create Background Worker**.
+
+> Render will automatically build and run your bot 24/7 in the cloud for free!
+
+---
+
+### Option B: VPS / Linux Server (Ubuntu/Debian)
+
+If you have a Linux VPS (e.g., DigitalOcean, AWS, Linode), you can use `pm2` to keep the bot running indefinitely:
+
+```bash
+# 1. Update system & install Node.js + PM2 + Python
+sudo apt update && sudo apt install -y python3 python3-pip python3-venv nodejs npm
+sudo npm install -g pm2
+
+# 2. Clone repository & setup
+git clone https://github.com/WspJon/CallKeeper.git
+cd CallKeeper
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# 3. Create .env file with your credentials
+nano .env
+
+# 4. Start bot using PM2
+pm2 start bot.py --name "callkeeper" --interpreter ./venv/bin/python
+
+# 5. Enable PM2 to auto-restart on server reboot
+pm2 startup
+pm2 save
 ```
 
 ---
