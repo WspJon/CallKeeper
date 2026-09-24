@@ -10,7 +10,7 @@
 
 ## 📋 Table of Contents
 - [✨ Features](#-features)
-- [📖 Step-by-Step Setup Guide](#-step-by-step-setup-guide)
+- [📖 Step-by-Step Setup Guide](#-step-by-step-step-guide)
   - [Step 1: Get Discord Credentials](#step-1-get-discord-credentials)
   - [Step 2: Invite Bot to Server](#step-2-invite-bot-to-server)
   - [Step 3: Local Installation](#step-3-local-installation)
@@ -82,15 +82,24 @@ pip install -r requirements.txt
 ---
 
 ### Step 4: Configure Credentials
-1. Duplicate `.env.example` and rename it to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. Open `.env` in any text editor and paste your credentials:
-   ```env
-   DISCORD_TOKEN=your_actual_bot_token_here
-   VOICE_CHANNEL_ID=your_voice_channel_id_here
-   ```
+You need to create your secret `.env` file from the sample template:
+
+- **Via Terminal / Command Prompt:**
+  ```bash
+  # Windows (PowerShell) or Linux/macOS:
+  cp .env.example .env
+
+  # Windows (CMD):
+  copy .env.example .env
+  ```
+- **Via File Explorer:**
+  Simply right-click `.env.example`, select **Copy**, paste it into the same folder, and rename the copy to `.env`.
+
+Open `.env` in any text editor and paste your credentials:
+```env
+DISCORD_TOKEN=your_actual_bot_token_here
+VOICE_CHANNEL_ID=your_voice_channel_id_here
+```
 
 ---
 
